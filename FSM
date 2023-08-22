@@ -1,0 +1,96 @@
+// State.h
+#pragma once
+
+class State {
+public:
+  virtual void handleInput(Input input) = 0;
+  virtual void update() = 0;
+  virtual void draw() = 0;
+};
+
+// IdleState.h
+#pragma once
+
+#include "State.h"
+
+class IdleState : public State {
+public:
+  void handleInput(Input input) override;
+  void update() override;
+  void draw() override;
+};
+
+// WalkingState.h
+#pragma once
+
+#include "State.h"
+
+class WalkingState : public State {
+public:
+  void handleInput(Input input) override;
+  void update() override;
+  void draw() override;
+};
+
+// JumpingState.h
+#pragma once
+
+#include "State.h"
+
+class JumpingState : public State {
+public:
+  void handleInput(Input input) override;
+  void update() override;
+  void draw() override;
+};
+
+// Heroine.h
+#pragma once
+
+#include "State.h"
+
+class Heroine {
+public:
+  Heroine();
+  void handleInput(Input input);
+  void update();
+  void draw();
+
+private:
+  State* currentState_;
+};
+
+// main.cpp
+#include <iostream>
+#include "Heroine.h"
+
+int main() {
+  Heroine heroine;
+
+  while (true) {
+    heroine.handleInput(std::cin.get());
+    heroine.update();
+    heroine.draw();
+  }
+
+  return 0;
+}
+
+
+/*
+
+The Heroine class is the main class in this example. It is responsible for managing the state of the character. The Heroine class has a pointer to a State object, which represents the current state of the character. The Heroine class also has methods for handling input, updating the character's state, and drawing the character.
+
+The State class is an abstract class that defines the interface for all states. The State class has three pure virtual methods: handleInput(), update(), and draw(). These methods must be implemented by all subclasses of State.
+
+The IdleState, WalkingState, and JumpingState classes are all subclasses of State. They each implement the handleInput(), update(), and draw() methods in a way that is specific to their respective state.
+
+For example, the IdleState class might implement the handleInput() method to change the character's state to WalkingState if the player presses the "W" key. The WalkingState class might implement the update() method to move the character forward. The JumpingState class might implement the draw() method to draw the character with its arms and legs extended.
+
+The Heroine class uses the State class to manage the state of the character. When the player presses a key, the Heroine class calls the handleInput() method on the current state object. The handleInput() method then determines what to do, such as changing the state of the character or taking some other action.
+
+The Heroine class also calls the update() and draw() methods on the current state object to update the state of the character and draw the character on the screen.
+
+The State pattern is a design pattern that allows you to decouple the behavior of an object from its state. This makes the object's code more modular and easier to maintain. The State pattern is often used in games to manage the state of characters and other objects.
+
+*/
